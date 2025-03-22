@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知覚と存在02</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+            color: white;
+            font-family: "Arial", sans-serif;
+        }
+        .container {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 24px;
+        }
+        .text {
+            position: absolute;
+            transition: transform 0.5s ease-in-out, opacity 0.5s;
+        }
+        .mirror {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, rgba(0,0,0,0) 80%);
+            mix-blend-mode: difference;
+            pointer-events: none;
+        }
+        .flow {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.1));
+            mix-blend-mode: overlay;
+            opacity: 0.8;
+            animation: flowMove 5s infinite alternate ease-in-out;
+        }
+        @keyframes flowMove {
+            from { transform: translateX(-20px); }
+            to { transform: translateX(20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text">あらゆるものが、あらゆるものを包んでいる</div>
+    </div>
+    <div class="mirror"></div>
+    <div class="flow"></div>
+    <script>
+        document.addEventListener("mousemove", (e) => {
+            const text = document.querySelector(".text");
+            const mirror = document.querySelector(".mirror");
+            const x = (e.clientX / window.innerWidth - 0.5) * 200;
+            const y = (e.clientY / window.innerHeight - 0.5) * 200;
+            
+            text.style.transform = `translate(${x / 4}px, ${y / 4}px) scale(${1 + x / 500}) rotate(${y / 10}deg)`;
+            mirror.style.background = `radial-gradient(circle at ${e.clientX}px ${e.clientY}px, rgba(255,255,255,0.2) 10%, rgba(0,0,0,0) 80%)`;
+        });
+
+        document.addEventListener("click", () => {
+            const text = document.querySelector(".text");
+            text.style.opacity = text.style.opacity === "0" ? "1" : "0";
+        });
+    </script>
+</body>
+</html>
